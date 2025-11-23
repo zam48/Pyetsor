@@ -1,3 +1,4 @@
+[pyetesor_interaktiv.html](https://github.com/user-attachments/files/23663904/pyetesor_interaktiv.html)
 <!DOCTYPE html>
 <html lang="sq">
 <head>
