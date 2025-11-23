@@ -1,4 +1,3 @@
-[pyetesor_interaktiv.html](https://github.com/user-attachments/files/23663904/pyetesor_interaktiv.html)
 <!DOCTYPE html>
 <html lang="sq">
 <head>
@@ -414,6 +413,7 @@
 </head>
 <body>
     <div class="container">
+<form id="surveyForm" action="https://formspree.io/f/xrbdzqep" method="POST">
         <div class="header">
             <h1>📊 Pyetësor: Bilanci Jetë Private - Jetë Profesionale</h1>
             <p>Gjenerata X (44-59 vjeç)</p>
@@ -1366,7 +1366,9 @@
                 <button class="download-btn" onclick="location.reload()" style="background: #6c757d;">🔄 Fillo Përsëri</button>
             </div>
         </div>
+</form>
     </div>
+
 
     <script>
         let currentSection = 1;
@@ -1655,14 +1657,27 @@
             surveyData.timestamp = new Date().toISOString();
             surveyData.completedAt = new Date().toLocaleString('sq-AL');
 
-            // Shfaq rezultatet
-            document.querySelector(`.section[data-section="${currentSection}"]`).classList.remove('active');
-            document.getElementById('results').classList.add('active');
-            
-            // Krijo përmbledhjen
-            createSummary();
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            //Dergo te dhenat ne formspree
+            const form = document.getElementById('surveyform');
+
+             // Krijo hidden inputs për çdo përgjigje
+    for (let key in surveyData) {
+        let value = surveyData[key];
+        if (Array.isArray(value)) {
+            value = value.join(', ');
+        } else if (typeof value === 'object') {
+            value = JSON.stringify(value);
+        }
+        
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+    }
+    
+     // Dërgo formularin
+     form.submit();
         }
 
         function createSummary() {
